@@ -14,8 +14,10 @@ from jsonvalidator.utils import JsonPropertyType, JsonDataValidator
 def create_order_api(request):
 
     data_dict = json.loads(request.body)
+    # create your json_schema here
     json_schema = {
         "order": {
+            # use only one dictionary in list for representation
             "products": [{
                 "product_id": JsonPropertyType(JsonPropertyType.TYPE_POSITIVE_INTEGER),
                 "quantity": JsonPropertyType(JsonPropertyType.TYPE_POSITIVE_INTEGER)
@@ -31,10 +33,10 @@ def create_order_api(request):
         }
     }
 
+    # Put your schema in to JsonDataValidator and then call validate method to get validate_result
     validate_result = JsonDataValidator(json_schema).validate(data_dict)
     if not validate_result:
-        return validate_result.json_response
+        return validate_result.json_response  # generate json_response with http 400
     else:
-        # the json data is already validated
-        # write whatever you want to do
+        # The json data is already validated, you're ready to go.
         return HttpResponse('success')

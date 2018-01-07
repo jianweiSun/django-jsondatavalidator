@@ -41,14 +41,7 @@ class JsonPropertyType:
     TYPE_ORDER_NAME = "order_name"
 
     def __init__(self, type_string):
-        if type_string not in {JsonPropertyType.TYPE_STRING, JsonPropertyType.TYPE_NUMBER,
-                               JsonPropertyType.TYPE_BOOLEAN, JsonPropertyType.TYPE_INTEGER,
-                               JsonPropertyType.TYPE_POSITIVE_INTEGER, JsonPropertyType.TYPE_EMAIL,
-                               JsonPropertyType.TYPE_PHONE, JsonPropertyType.TYPE_ZIP,
-                               JsonPropertyType.TYPE_TITLE, JsonPropertyType.TYPE_ORDER_NAME}:
-            raise Exception("type:{} is not supported".format(type_string))
-        else:
-            self.type_string = type_string
+        self.type_string = type_string
 
     def validate(self, data_to_validate):
         validate_function = getattr(self, '_validate_{}'.format(self.type_string))
