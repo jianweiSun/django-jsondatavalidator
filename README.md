@@ -43,6 +43,7 @@ def create_order_api(request):
         return validate_result.json_response  # generate json_response with http 400
     else:
         # The json data is already validated, you're ready to go.
+	# Write your logic here without any concern.
         return HttpResponse('success')
 
 ```
