@@ -72,6 +72,82 @@ Recall the json_schema we defined in the example view:
 ``` json
 Request Body
 {	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": 2,
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "12345"
+        }
+    }
+}
+```
+```json
+Response Body
+{
+    "errors": {
+        "order": {
+            "contact_information": {
+                "phone": "length of phone number must be 10."
+            }
+        }
+    }
+}
+```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": "the_fancy_product",
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "1234567890"
+        }
+    }
+}
+```
+---
+```json
+Response Body
+{
+    "errors": {
+        "order": {
+            "products": {
+                "product_id": "integer is required."
+            }
+        }
+    }
+}
+```
+``` json
+Request Body
+{	
     "order": 123
 }
 ```
@@ -144,117 +220,6 @@ Response Body
 {
     "errors": {
         "order": "abcde is not valid property name."
-    }
-}
-```
----
-``` json
-Request Body
-{	
-	"order": {
-        "products": [
-            {
-                "product_id": 1,
-                "quantity": 1
-            }, 
-            {
-                "product_id": 2,
-                "quantity": 3
-            }
-        ],
-        "email": "wang@example.com", 
-        "contact_information": {
-            "first_name": "王",
-            "last_name": "大明",
-            "title": "先生",
-            "address": "台北市的王大明家",
-            "phone": "1234567890"
-        }, 
-        "abcde": 123
-    }
-}
-```
-```json
-Response Body
-{
-    "errors": {
-        "order": "abcde is not valid property name."
-    }
-}
-```
----
-``` json
-Request Body
-{	
-	"order": {
-        "products": [
-            {
-                "product_id": 1,
-                "quantity": 1
-            }, 
-            {
-                "product_id": 2,
-                "quantity": 3
-            }
-        ],
-        "email": "wang@example.com", 
-        "contact_information": {
-            "first_name": "王",
-            "last_name": "大明",
-            "title": "先生",
-            "address": "台北市的王大明家",
-            "phone": "12345"
-        }
-    }
-}
-```
-```json
-Response Body
-{
-    "errors": {
-        "order": {
-            "contact_information": {
-                "phone": "length of phone number must be 10."
-            }
-        }
-    }
-}
-```
----
-``` json
-Request Body
-{	
-	"order": {
-        "products": [
-            {
-                "product_id": 1,
-                "quantity": 1
-            }, 
-            {
-                "product_id": "the_fancy_product",
-                "quantity": 3
-            }
-        ],
-        "email": "wang@example.com", 
-        "contact_information": {
-            "first_name": "王",
-            "last_name": "大明",
-            "title": "先生",
-            "address": "台北市的王大明家",
-            "phone": "12345"
-        }
-    }
-}
-```
-```json
-Response Body
-{
-    "errors": {
-        "order": {
-            "products": {
-                "product_id": "integer is required."
-            }
-        }
     }
 }
 ```
