@@ -220,3 +220,67 @@ Response Body
     }
 }
 ```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": "the_fancy_product",
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "12345"
+        }
+    }
+}
+```
+```json
+Response Body
+{
+    "errors": {
+        "order": {
+            "products": {
+                "product_id": "integer is required."
+            }
+        }
+    }
+}
+```
+## Define your custom type
+It's easy to add your custom json property type with your custom validation method.
+
+Just add it to JsonPropertyType.
+
+Example:
+```python
+class JsonPropertyType:
+    ...
+    # add your custom type in class attribute
+    TYPE_MY_CUSTOM_TYPE = "my_custom_type"
+    
+    # add your custom validation function in class method
+    # note that the validate method name must be "_validate_{}".format(your_custom_type_name)
+    @staticmethod
+    def _validate_my_custom_type(data):
+        if data != "I love python":
+            return ValidateResult(False, "You dont know python.")
+        else:
+            return ValidateResult(True)
+```
+
+## You're ready to go
+Feel free to copy or tweak the code as you need, just don't forget to add reference to this repository.
+
+Star if you like :)
