@@ -132,7 +132,6 @@ Request Body
     }
 }
 ```
----
 ```json
 Response Body
 {
@@ -145,6 +144,7 @@ Response Body
     }
 }
 ```
+---
 ``` json
 Request Body
 {	
