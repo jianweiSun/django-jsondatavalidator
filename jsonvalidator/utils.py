@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 
 
-class ValidateResult(object):
+class ValidateResult:
     """
     Encapsulate is_valid, and message.
     Message is generally used in the case which is_valid=False.
@@ -16,11 +16,11 @@ class ValidateResult(object):
         self.is_valid = is_valid
         self.message = message
 
-    def __nonzero__(self):  # __nonzero__ in python 2 is equivalent to __bool__ in python 3
+    def __bool__(self):
         return self.is_valid
 
 
-class JsonPropertyType(object):
+class JsonPropertyType:
     """
     JsonPropertyType refer to low level data structure in JSON, which means not dict and list ( refer to
     Javascript object and array).
@@ -57,14 +57,14 @@ class JsonPropertyType(object):
     @staticmethod
     def _validate_string(data):
         # IMPORTANT: use unicode, because json.loads will turn json string to python unicode
-        if not isinstance(data, unicode):
+        if not isinstance(data, str):
             return ValidateResult(False, "string is required.")
         else:
             return ValidateResult(True)
 
     @staticmethod
     def _validate_number(data):
-        if not (isinstance(data, int) or isinstance(data, long) or isinstance(data, float)):
+        if not (isinstance(data, int) or isinstance(data, float)):
             return ValidateResult(False, "number is required.")
         else:
             return ValidateResult(True)
@@ -78,7 +78,7 @@ class JsonPropertyType(object):
 
     @staticmethod
     def _validate_integer(data):
-        if not (isinstance(data, int) or isinstance(data, long)):
+        if not isinstance(data, int):
             return ValidateResult(False, "integer is required.")
         else:
             return ValidateResult(True)
@@ -163,7 +163,7 @@ class JsonPropertyType(object):
                 return ValidateResult(True)
 
 
-class JsonResponseResult(object):
+class JsonResponseResult:
     """
     The most important property is JsonResponseResult.json_response, which return JsonResponse object.
     :param: key_path_list: which is used to build nested error message for JsonResponseResult.json_response.
@@ -177,7 +177,7 @@ class JsonResponseResult(object):
         self.key_path_list = key_path_list
         self.status = status
 
-    def __nonzero__(self):  # __nonzero__ in python 2 is equivalent to __bool__ in python 3
+    def __bool__(self):  # __nonzero__ in python 2 is equivalent to __bool__ in python 3
         return self.is_valid
 
     @property
@@ -204,7 +204,7 @@ class JsonResponseResult(object):
             raise Exception('json_response is only used for invalid json_response.')
 
 
-class JsonDataValidator(object):
+class JsonDataValidator:
     """
     Right now, you can only put dicts in list.( string/number in list is not supported )
     Also, all attributes in json_data_schema is required, which means you need to fill in all attributes in
@@ -251,7 +251,7 @@ class JsonDataValidator(object):
     def json_data_schema_recursive_validate(cls, schema):
         if isinstance(schema, dict):
             for k, v in schema.items():
-                assert isinstance(k, unicode), "dict key:{} is not unicode".format(k)
+                assert isinstance(k, str), "dict key:{} is not string".format(k)
                 cls.json_data_schema_recursive_validate(v)
 
         elif isinstance(schema, list):

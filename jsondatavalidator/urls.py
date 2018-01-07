@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from jsonvalidator import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('example/buy_product_api/', views.buy_product_api, name="buy_product_api")
 ]
