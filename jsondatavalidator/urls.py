@@ -20,5 +20,5 @@ from jsonvalidator import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('example/buy_product_api/', views.buy_product_api, name="buy_product_api")
+    path('example/create_order_api/', views.create_order_api, name="create_order_api")
 ]

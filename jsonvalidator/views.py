@@ -11,7 +11,7 @@ from jsonvalidator.utils import JsonPropertyType, JsonDataValidator
 @csrf_exempt
 @require_POST
 @request_body_json_required
-def buy_product_api(request):
+def create_order_api(request):
 
     data_dict = json.loads(request.body)
     json_schema = {
