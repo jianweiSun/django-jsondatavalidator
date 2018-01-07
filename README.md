@@ -46,9 +46,177 @@ def create_order_api(request):
         return HttpResponse('success')
 
 ```
-## request and response example if the validation failed
+## Response is well formatted and nested if the validation failed.
+Recall the json_schema we defined in the example view:
 
-request
-``` javascript
-
+``` python 
+    json_schema = {
+        "order": {
+            # use only one dictionary in list for representation
+            "products": [{
+                "product_id": JsonPropertyType(JsonPropertyType.TYPE_POSITIVE_INTEGER),
+                "quantity": JsonPropertyType(JsonPropertyType.TYPE_POSITIVE_INTEGER)
+            }],
+            "email": JsonPropertyType(JsonPropertyType.TYPE_EMAIL),
+            "contact_information": {
+                "first_name": JsonPropertyType(JsonPropertyType.TYPE_STRING),
+                "last_name": JsonPropertyType(JsonPropertyType.TYPE_STRING),
+                "title": JsonPropertyType(JsonPropertyType.TYPE_TITLE),
+                "address": JsonPropertyType(JsonPropertyType.TYPE_STRING),
+                "phone": JsonPropertyType(JsonPropertyType.TYPE_PHONE)
+            }
+        }
+    }
+```
+## examples
+``` json
+Request Body
+{	
+    "order": 123
+}
+```
+```json
+Response Body
+The order should be an object, so that syntax error is raised.
+{
+    "errors": {
+        "order": "syntax error."
+    }
+}
+```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": 2,
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com"
+    }
+}
+```
+```json
+Response Body
+Right now, every property in json_schema is required.
+{
+    "errors": {
+        "order": "contact_information is required"
+    }
+}
+```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": 2,
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "1234567890"
+        }, 
+        "abcde": 123
+    }
+}
+```
+```json
+Response Body
+{
+    "errors": {
+        "order": "abcde is not valid property name."
+    }
+}
+```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": 2,
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "1234567890"
+        }, 
+        "abcde": 123
+    }
+}
+```
+```json
+Response Body
+{
+    "errors": {
+        "order": "abcde is not valid property name."
+    }
+}
+```
+---
+``` json
+Request Body
+{	
+	"order": {
+        "products": [
+            {
+                "product_id": 1,
+                "quantity": 1
+            }, 
+            {
+                "product_id": 2,
+                "quantity": 3
+            }
+        ],
+        "email": "wang@example.com", 
+        "contact_information": {
+            "first_name": "王",
+            "last_name": "大明",
+            "title": "先生",
+            "address": "台北市的王大明家",
+            "phone": "12345"
+        }
+    }
+}
+```
+```json
+Response Body
+{
+    "errors": {
+        "order": {
+            "contact_information": {
+                "phone": "length of phone number must be 10."
+            }
+        }
+    }
+}
 ```
