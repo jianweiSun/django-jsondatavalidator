@@ -1,5 +1,5 @@
 # django-jsondatavalidator
-An easy and elegant json data validator.
+An easy and elegant json data validator which generate well-formatted error response for you.
 
 This project is just a django project which is meant to show you how to use the jsondatavalidator.
 
