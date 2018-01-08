@@ -7,7 +7,7 @@ This repository is just a django project which is meant to show you how to use t
 An django example view to show you how to use JsonDataValidator.
 
 Pay extra attention to the comment in the code block.
-```
+```python
 from jsonvalidator.decorators import request_body_json_required
 from jsonvalidator.utils import JsonPropertyType, JsonDataValidator
 
