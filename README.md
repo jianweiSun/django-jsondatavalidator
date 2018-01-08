@@ -1,8 +1,7 @@
 # django-jsondatavalidator
 An easy and elegant json data validator which generate well-formatted error response for you.
 
-This repository is just a django project which is meant to show you how to use the jsondatavalidator.
-
+This repository is just a django project which is meant to show you how to use the jsondatavalidator.<br />
 Feel free to copy or tweak the code as you need, just don't forget to add reference to this repository.
 
 ## example view
