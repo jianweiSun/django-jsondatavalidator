@@ -249,4 +249,3 @@ class JsonPropertyType:
 
 ## You're ready to go
 
-Star if you like :)
